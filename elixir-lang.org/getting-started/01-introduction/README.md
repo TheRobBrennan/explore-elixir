@@ -32,7 +32,7 @@ iex(3)>
 
 # To exit iex, press CTRL+C twice
 BREAK: (a)bort (c)ontinue (p)roc info (i)nfo (l)oaded
-       (v)ersion (k)ill (D)b-tables (d)istribution
+ (v)ersion (k)ill (D)b-tables (d)istribution
 ^C%
 ```
 
@@ -63,4 +63,4 @@ When asking questions, remember these two tips:
 
 + Instead of asking “how to do X in Elixir”, ask “how to solve Y in Elixir”. In other words, don’t ask how to implement a particular solution, instead describe the problem at hand. Stating the problem gives more context and less bias for a correct answer.
 
-+ In case things are not working as expected, please include as much information as you can in your report, for example: your Elixir version, the code snippet and the error message alongside the error stacktrace. Use sites like Gist to paste this information.
++ In case things are not working as expected, please include as much information as you can in your report, for example, your Elixir version, the code snippet and the error message alongside the error stack trace. Use sites like Gist to paste this information.
