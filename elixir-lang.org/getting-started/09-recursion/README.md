@@ -25,3 +25,28 @@ Hello!
 ```
 
 ### Reduce and map algorithms
+
+```sh
+$ elixir recursion-2-reduce.exs
+6
+```
+
+Recursion and tail call optimization are an important part of Elixir and are commonly used to create loops. However, when programming in Elixir you will rarely use recursion as above to manipulate lists.
+
+The Enum module, which we’re going to see in the next chapter, already provides many conveniences for working with lists.
+
+```sh
+$ iex
+
+iex(1)> Enum.reduce([1, 2, 3], 0, fn(x, acc) -> x + acc end)
+6
+iex(2)> Enum.map([1, 2, 3], fn(x) -> x * 2 end)
+[2, 4, 6]
+
+# Using the capture syntax
+iex(3)> Enum.reduce([1, 2, 3], 0, &+/2)
+6
+iex(4)> Enum.map([1, 2, 3], &(&1 * 2))
+[2, 4, 6]
+
+```
