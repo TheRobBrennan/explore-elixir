@@ -80,4 +80,47 @@ You may use `do:` for one-liners but always use `do/end` for functions spanning 
 
 ### Function capturing
 
+Throughout this tutorial, we have been using the notation name/arity to refer to functions. It happens that this notation can actually be used to retrieve a named function as a function type. Start iex, running the math.exs file defined above:
+
+```sh
+$ iex math.exs
+
+iex(1)> Math.zero?(0)
+true
+iex(2)> fun = &Math.zero?/1
+&Math.zero?/1
+iex(3)> is_function(fun)
+true
+iex(4)> fun.(0)
+true
+
+# Remember Elixir makes a distinction between anonymous functions and named functions, where the former must be invoked with a dot (.) between the variable name and parentheses. The capture operator bridges this gap by allowing named functions to be assigned to variables and passed as arguments in the same way we assign, invoke and pass anonymous functions.
+
+# Local or imported functions, like is_function/1, can be captured without the module
+iex(5)> &is_function/1
+&:erlang.is_function/1
+iex(6)> (&is_function/1).(fun)
+true
+
+# Note the capture syntax can also be used as a shortcut for creating functions
+# The &1 represents the first argument passed into the function. &(&1 + 1) is exactly the same as fn x -> x + 1 end. This syntax is useful for short function definitions.
+iex(8)> fun = &(&1 + 1)
+#Function<7.126501267/1 in :erl_eval.expr/5>
+iex(9)> fun.(1)
+2
+
+iex(10)> fun2 = &"Good #{&1}"
+#Function<7.126501267/1 in :erl_eval.expr/5>
+iex(11)> fun2.("morning")
+"Good morning"
+
+# If you want to capture a function from a module, you can do &Module.function()
+# &List.flatten(&1, &2) is the same as writing fn(list, tail) -> List.flatten(list, tail) end
+iex(13)> fun = &List.flatten(&1, &2)
+&List.flatten/2
+iex(14)> fun.([1, [[2], 3]], [4, 5])
+[1, 2, 3, 4, 5]
+
+```
+
 ### Default arguments
