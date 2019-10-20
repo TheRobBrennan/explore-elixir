@@ -124,3 +124,40 @@ iex(14)> fun.([1, [[2], 3]], [4, 5])
 ```
 
 ### Default arguments
+
+```sh
+# Named functions in Elixir also support default arguments
+$ elixir default-arguments.exs
+
+# Any expression is allowed to serve as a default value, but it won’t be evaluated during the function definition. Every time the function is invoked and any of its default values have to be used, the expression for that default value will be evaluated
+$ elixirc default-arguments-2.ex
+$ iex
+
+iex(1)> DefaultTest.dowork
+"hello"
+iex(2)> DefaultTest.dowork 123
+123
+iex(3)> DefaultTest.dowork
+"hello"
+
+# If a function with default values has multiple clauses, it is required to create a function head (without an actual body) for declaring defaults
+$ elixir default-arguments-3.exs
+Hello world
+Hello_world
+Hello
+
+# When using default values, one must be careful to avoid overlapping function definitions. Consider default-arguments-4.ex
+$ elixirc default-arguments-4.ex
+warning: this clause cannot match because a previous clause at line 2 always matches
+  default-arguments-4.ex:7
+
+$ iex default-arguments-4.ex
+# The compiler is telling us that invoking the join function with two arguments will always choose the first definition of join whereas the second one will only be invoked when three arguments are passed
+iex(1)> Concat.join "Hello", "world"
+***First join
+"Helloworld"
+iex(2)> Concat.join "Hello", "world", "_"
+***Second join
+"Hello_world"
+
+```
