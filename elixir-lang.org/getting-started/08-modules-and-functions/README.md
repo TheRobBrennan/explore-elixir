@@ -58,6 +58,26 @@ The file will be compiled in memory and executed, printing “3” as the result
 
 ### Named functions
 
+Inside a module, we can define functions with `def/2` and private functions with `defp/2`. A function defined with `def/2` can be invoked from other modules while a private function can only be invoked locally.
+
+```sh
+$ elixir named-functions.exs
+```
+
+Function declarations also support guards and multiple clauses. If a function has several clauses, Elixir will try each clause until it finds one that matches. Here is an implementation of a function that checks if the given number is zero or not.
+
+```sh
+$ elixir named-functions-2.exs
+```
+
+Similar to constructs like if, named functions support both do: and do/end block syntax, as we learned do/end is a convenient syntax for the keyword list format. For example, let's look at `named-functions-3.exs`.
+
+```sh
+$ elixir named-functions-3.exs
+```
+
+You may use `do:` for one-liners but always use `do/end` for functions spanning multiple lines.
+
 ### Function capturing
 
 ### Default arguments
