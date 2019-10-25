@@ -213,15 +213,37 @@ For companies and teams, we recommend developers to run `mix format --check-form
 
 You can learn more about the code formatter by checking the format task documentation or by reading the release announcement for Elixir v1.6, the first version to include the formatter.
 
-```sh
-
-```
-
 ### Environments
 
-```sh
+Mix provides the concept of “environments”. They allow a developer to customize compilation and other options for specific scenarios. By default, Mix understands three environments:
 
+`:dev` - the one in which Mix tasks (like `compile`) run by default
+`:test` - used by mix test
+`:prod` - the one you will use to run your project in production
+
+The environment applies only to the current project. As we will see in future chapters, any dependency you add to your project will by default run in the `:prod` environment.
+
+Customization per environment can be done by accessing the `Mix.env` function in your `mix.exs` file, which returns the current environment as an atom. That’s what we have used in the `:start_permanent options`:
+
+```sh
+def project do
+  [
+    ...,
+    start_permanent: Mix.env == :prod,
+    ...
+  ]
+end
 ```
+
+When true, the `:start_permanent` option starts your application in `permanent` mode, which means the Erlang VM will crash if your application’s supervision tree shuts down. Notice we don’t want this behaviour in `dev` and `test` because it is useful to keep the VM instance running in those environments for troubleshooting purposes.
+
+Mix will default to the `:dev` environment, except for the test task that will default to the `:test` environment. The environment can be changed via the `MIX_ENV` environment variable:
+
+```sh
+$ MIX_ENV=prod mix compile
+```
+
+Mix is a build tool and, as such, it is not expected to be available in production. Therefore, it is recommended to access `Mix.env` only in configuration files and inside `mix.exs`, never in your application code (`lib`).
 
 ### Exploring
 
