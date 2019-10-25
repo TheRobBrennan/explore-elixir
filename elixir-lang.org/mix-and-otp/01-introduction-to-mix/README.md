@@ -48,9 +48,31 @@ In this chapter, we will create our first project using Mix and explore differen
 
 ### Our first project
 
-```sh
+When you install Elixir, besides getting the `elixir`, `elixirc` and `iex` executables, you also get an executable Elixir script named `mix`.
 
+Let’s create our first project by invoking `mix new` from the command line. We’ll pass the project name as the argument (`kv`, in this case), and tell Mix that our main module should be the all-uppercase `KV`, instead of the default, which would have been `Kv`:
+
+```sh
+$ mix new kv --module KV
 ```
+
+Mix will create a directory named kv with a few files in it:
+
+```sh
+* creating README.md
+* creating .formatter.exs
+* creating .gitignore
+* creating mix.exs
+* creating lib
+* creating lib/kv.ex
+* creating test
+* creating test/test_helper.exs
+* creating test/kv_test.exs
+```
+
+Let’s take a brief look at those generated files.
+
+Note: Mix is an Elixir executable. This means that in order to run `mix`, you need to have both `mix` and `elixir` executables in your PATH. That’s what happens when you install Elixir.
 
 ### Project compilation
 
