@@ -115,10 +115,91 @@ If anything had to be compiled, you see some informative text, and get the `:ok`
 
 ### Running tests
 
-```sh
+Mix also generated the appropriate structure for running our project tests. Mix projects usually follow the convention of having a `<filename>_test.exs` file in the test directory for each file in the `lib` directory. For this reason, we can already find a `test/kv_test.exs` corresponding to our `lib/kv.ex` file. It doesn’t do much at this point.
 
+It is important to note a couple of things:
+
++ The test file is an Elixir script file (`.exs`). This is convenient because we don’t need to compile test files before running them
++ We define a test module named `KVTest`, in which we use `ExUnit.Case` to inject the testing API
++ We use one of the injected macros, `doctest/1`, to indicate that the `KV` module contains `doctests` (we will discuss those in a later chapter)
++ We use the `test/2` macro to define a simple test
+
+Mix also generated a file named `test/test_helper.exs` which is responsible for setting up the test framework.
+
+This file will be required by Mix every time before we run our tests. We can run tests with:
+
+```sh
+$ mix test
+Compiling 1 file (.ex)
+Generated kv app
+..
+
+Finished in 0.03 seconds
+1 doctest, 1 test, 0 failures
+
+Randomized with seed 44575
 ```
 
+Notice that by running mix test, Mix has compiled the source files and generated the application manifest once again. This happens because Mix supports multiple environments, which we will discuss later in this chapter.
+
+Furthermore, you can see that ExUnit prints a dot for each successful test and automatically randomizes tests too. Let’s make the test fail on purpose and see what happens:
+
+```sh
+# Change the assertion in test/kv_test.exs to the following
+assert KV.hello() == :oops
+
+# Now run "mix test" again (notice this time there will be no compilation):
+$ mix test
+.
+
+  1) test greets the world (KVTest)
+     test/kv_test.exs:5
+     Assertion with == failed
+     code:  assert KV.hello() == :oops
+     left:  :world
+     right: :oops
+     stacktrace:
+       test/kv_test.exs:6: (test)
+
+
+
+Finished in 0.03 seconds
+1 doctest, 1 test, 1 failure
+
+Randomized with seed 53599
+```
+
+For each failure, ExUnit prints a detailed report, containing the test name with the test case, the code that failed and the values for the left side and right side (rhs) of the == operator.
+
+In the second line of the failure, right below the test name, there is the location where the test was defined. If you copy the test location in full, including the file and line number, and append it to mix test, Mix will load and run just that particular test:
+
+```sh
+$ mix test test/kv_test.exs:5
+Excluding tags: [:test]
+Including tags: [line: "5"]
+
+
+
+  1) test greets the world (KVTest)
+     test/kv_test.exs:5
+     Assertion with == failed
+     code:  assert KV.hello() == :oops
+     left:  :world
+     right: :oops
+     stacktrace:
+       test/kv_test.exs:6: (test)
+
+
+
+Finished in 0.02 seconds
+1 doctest, 1 test, 1 failure, 1 excluded
+
+Randomized with seed 49393
+```
+
+This shortcut will be extremely useful as we build our project, allowing us to quickly iterate by running a single test.
+
+Finally, the stacktrace relates to the failure itself, giving information about the test and often the place the failure was generated from within the source files.
 ### Automatic code formatting
 
 ```sh
