@@ -247,6 +247,70 @@ Mix is a build tool and, as such, it is not expected to be available in producti
 
 ### Exploring
 
-```sh
+There is much more to Mix, and we will continue to explore it as we build our project. A general overview is available on the Mix documentation. Read the Mix source code here.
 
+Keep in mind that you can always invoke the help task to list all available tasks:
+
+```sh
+$ mix help
+mix                   # Runs the default task (current: "mix run")
+mix app.start         # Starts all registered apps
+mix app.tree          # Prints the application tree
+mix archive           # Lists installed archives
+mix archive.build     # Archives this project into a .ez file
+mix archive.install   # Installs an archive locally
+mix archive.uninstall # Uninstalls archives
+mix clean             # Deletes generated application files
+mix cmd               # Executes the given command
+mix compile           # Compiles source files
+mix deps              # Lists dependencies and their status
+mix deps.clean        # Deletes the given dependencies' files
+mix deps.compile      # Compiles dependencies
+mix deps.get          # Gets all out of date dependencies
+mix deps.tree         # Prints the dependency tree
+mix deps.unlock       # Unlocks the given dependencies
+mix deps.update       # Updates the given dependencies
+mix do                # Executes the tasks separated by comma
+mix escript           # Lists installed escripts
+mix escript.build     # Builds an escript for the project
+mix escript.install   # Installs an escript locally
+mix escript.uninstall # Uninstalls escripts
+mix format            # Formats the given files/patterns
+mix help              # Prints help information for tasks
+mix hex               # Prints Hex help information
+mix hex.audit         # Shows retired Hex deps for the current project
+mix hex.build         # Builds a new package version locally
+mix hex.config        # Reads, updates or deletes local Hex config
+mix hex.docs          # Fetches or opens documentation of a package
+mix hex.info          # Prints Hex information
+mix hex.organization  # Manages Hex.pm organizations
+mix hex.outdated      # Shows outdated Hex deps for the current project
+mix hex.owner         # Manages Hex package ownership
+mix hex.package       # Fetches or diffs packages
+mix hex.publish       # Publishes a new package version
+mix hex.repo          # Manages Hex repositories
+mix hex.retire        # Retires a package version
+mix hex.search        # Searches for package names
+mix hex.user          # Manages your Hex user account
+mix loadconfig        # Loads and persists the given configuration
+mix local             # Lists local tasks
+mix local.hex         # Installs Hex locally
+mix local.phx         # Updates the Phoenix project generator locally
+mix local.public_keys # Manages public keys
+mix local.rebar       # Installs Rebar locally
+mix new               # Creates a new Elixir project
+mix phx.new           # Creates a new Phoenix v1.4.10 application
+mix phx.new.ecto      # Creates a new Ecto project within an umbrella project
+mix phx.new.web       # Creates a new Phoenix web project within an umbrella project
+mix profile.cprof     # Profiles the given file or expression with cprof
+mix profile.eprof     # Profiles the given file or expression with eprof
+mix profile.fprof     # Profiles the given file or expression with fprof
+mix release           # Assembles a self-contained release
+mix release.init      # Generates sample files for releases
+mix run               # Starts and runs the current application
+mix test              # Runs a project's tests
+mix xref              # Performs cross reference checks
+iex -S mix            # Starts IEx and runs the default task
 ```
+
+You can get further information about a particular task by invoking `mix help TASK`
