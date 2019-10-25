@@ -76,9 +76,42 @@ Note: Mix is an Elixir executable. This means that in order to run `mix`, you ne
 
 ### Project compilation
 
-```sh
+A file named `mix.exs` was generated inside our new project folder (`kv`) and its main responsibility is to configure our project. Let’s take a look at it.
 
+Our `mix.exs` defines two public functions: `project`, which returns project configuration like the project name and version, and `application`, which is used to generate an application file.
+
+There is also a private function named `deps`, which is invoked from the project function, that defines our project dependencies. Defining deps as a separate function is not required, but it helps keep the project configuration tidy.
+
+Mix also generates a file at `lib/kv.ex` with a module containing exactly one function, called `hello`
+
+This structure is enough to compile our project:
+
+```sh
+$ cd kv
+$ mix compile
+Compiling 1 file (.ex)
+Generated kv app
 ```
+
+The `lib/kv.ex` file was compiled, an application manifest named `kv.app` was generated and all protocols were consolidated as described in the Getting Started guide. All compilation artifacts are placed inside the `_build` directory using the options defined in the `mix.exs` file.
+
+Once the project is compiled, you can start an iex session inside the project by running:
+
+```sh
+$ iex -S mix
+```
+
+We are going to work on this `kv` project, making modifications and trying out the latest changes from an `iex` session. While you may start a new session whenever there are changes to the project source code, you can also recompile the project from within `iex` with the recompile helper, like this:
+
+```sh
+iex(1)> recompile()
+Compiling 1 file (.ex)
+:ok
+iex(2)> recompile()
+:noop
+```
+
+If anything had to be compiled, you see some informative text, and get the `:ok` atom back, otherwise the function is silent, and returns `:noop`.
 
 ### Running tests
 
