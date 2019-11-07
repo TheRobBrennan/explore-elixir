@@ -141,9 +141,21 @@ How? By changing the original `test "stores values by key" do` to `test "stores 
 
 ### Other agent functions
 
-```sh
+Besides getting a value and updating the agent state, agents allow us to get a value and update the agent state in one function call via `Agent.get_and_update/2`. Let’s implement a `KV.Bucket.delete/2` function that deletes a key from the bucket, returning its current value
 
+```sh
+# elixir-lang.org/mix-and-otp/kv/lib/kv/bucket.ex
+@doc """
+Deletes `key` from `bucket`.
+
+Returns the current value of `key`, if `key` exists.
+"""
+def delete(bucket, key) do
+  Agent.get_and_update(bucket, &Map.pop(&1, key))
+end
 ```
+
+CHALLENGE: Update `elixir-lang.org/mix-and-otp/kv/test/kv/bucket_test.exs` to test the new functionality.
 
 ### Client/Server in agents
 
