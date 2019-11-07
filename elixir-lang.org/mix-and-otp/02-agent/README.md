@@ -159,6 +159,30 @@ CHALLENGE: Update `elixir-lang.org/mix-and-otp/kv/test/kv/bucket_test.exs` to te
 
 ### Client/Server in agents
 
-```sh
+Before we move on to the next chapter, let’s discuss the client/server dichotomy in agents. Let’s expand the `delete/2` function we have just implemented:
 
+```sh
+def delete(bucket, key) do
+  Agent.get_and_update(bucket, fn dict ->
+    Map.pop(dict, key)
+  end)
+end
 ```
+
+Everything that is inside the function we passed to the agent happens in the agent process. In this case, since the agent process is the one receiving and responding to our messages, we say the agent process is the server. Everything outside the function is happening in the client.
+
+This distinction is important. If there are expensive actions to be done, you must consider if it will be better to perform these actions on the client or on the server. For example:
+
+```sh
+def delete(bucket, key) do
+  Process.sleep(1000) # puts client to sleep
+  Agent.get_and_update(bucket, fn dict ->
+    Process.sleep(1000) # puts server to sleep
+    Map.pop(dict, key)
+  end)
+end
+```
+
+When a long action is performed on the server, all other requests to that particular server will wait until the action is done, which may cause some clients to timeout.
+
+In the next chapter, we will explore GenServers, where the segregation between clients and servers is made more apparent.
