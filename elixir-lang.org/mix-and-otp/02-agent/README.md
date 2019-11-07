@@ -129,9 +129,15 @@ Randomized with seed 58950
 
 ### Test setup with ExUnit callbacks
 
-```sh
+Before moving on and adding more features to `KV.Bucket`, let’s talk about ExUnit callbacks. As you may expect, all `KV.Bucket` tests will require a bucket agent to be up and running. Luckily, ExUnit supports callbacks that allow us to skip such repetitive tasks.
 
-```
+Let’s rewrite the test case at `elixir-lang.org/mix-and-otp/kv/test/kv/bucket_test.exs` to use callbacks.
+
+We have first defined a setup callback with the help of the `setup/1` macro. The `setup/1` macro defines a callback that is run before every test, in the same process as the test itself.
+
+Note that we need a mechanism to pass the `bucket` pid from the callback to the test. We do so by using the test context. When we return `%{bucket: bucket}` from the callback, ExUnit will merge this map into the test context. Since the test context is a map itself, we can pattern match the bucket out of it, providing access to the bucket inside the test.
+
+How? By changing the original `test "stores values by key" do` to `test "stores values by key", %{bucket: bucket} do`
 
 ### Other agent functions
 
